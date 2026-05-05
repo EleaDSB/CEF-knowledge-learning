@@ -3,6 +3,60 @@
 {% block title %}Mes certifications — Knowledge Learning{% endblock %}
 
 {% block body %}
-<h1 style="color:#00497c; margin-bottom:1.5rem;">Mes certifications</h1>
-<p style="color:#384050;">Cette fonctionnalité sera disponible prochainement.</p>
+<h1 style="color:#00497c; margin-bottom:2rem;">Mes certifications</h1>
+
+{% if certifications is empty and progressByTheme is empty %}
+    <div style="background:#fff; border-radius:8px; padding:2rem; text-align:center; box-shadow:0 2px 8px rgba(0,0,0,.08);">
+        <p style="color:#666; margin-bottom:1rem;">Vous n'avez pas encore de certification.</p>
+        <p style="color:#666; font-size:.9rem;">Achetez un cursus, validez toutes ses leçons et obtenez votre certification Knowledge Learning !</p>
+        <a href="{{ path('app_home') }}" class="btn btn-primary" style="margin-top:1rem; display:inline-block;">Voir les formations</a>
+    </div>
+{% else %}
+
+    {# Certifications obtenues #}
+    {% if certifications is not empty %}
+    <h2 style="color:#82b864; font-size:1.2rem; margin-bottom:1rem;">🎓 Certifications obtenues</h2>
+    <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; margin-bottom:2.5rem;">
+        {% for certification in certifications %}
+        <div style="background:#fff; border-radius:8px; padding:1.5rem; box-shadow:0 2px 8px rgba(0,0,0,.08); border-left:4px solid #82b864;">
+            <div style="display:flex; align-items:center; gap:.75rem; margin-bottom:.75rem;">
+                <span style="font-size:2rem;">🏆</span>
+                <div>
+                    <h3 style="color:#00497c; font-size:1.1rem;">{{ certification.theme.name }}</h3>
+                    <p style="color:#888; font-size:.85rem;">Obtenue le {{ certification.obtainedAt|date('d/m/Y') }}</p>
+                </div>
+            </div>
+            <p style="font-size:.9rem; color:#384050;">
+                Certification <strong>Knowledge Learning</strong> — {{ certification.theme.name }}
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {# Progression en cours #}
+    {% if progressByTheme is not empty %}
+    <h2 style="color:#0074c7; font-size:1.2rem; margin-bottom:1rem;">📈 Progression en cours</h2>
+    <div style="display:flex; flex-direction:column; gap:1rem;">
+        {% for item in progressByTheme %}
+        <div style="background:#fff; border-radius:8px; padding:1.25rem 1.5rem; box-shadow:0 2px 8px rgba(0,0,0,.08);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:.75rem;">
+                <h3 style="color:#384050; font-size:1rem;">{{ item.theme.name }}</h3>
+                <span style="color:#0074c7; font-weight:bold; font-size:.9rem;">
+                    {{ item.completed }}/{{ item.total }} leçons validées
+                </span>
+            </div>
+            <div style="background:#e0eaf4; border-radius:4px; height:10px; overflow:hidden;">
+                <div style="background:#0074c7; height:100%; width:{{ item.percent }}%; transition:width .3s;"></div>
+            </div>
+            <div style="display:flex; justify-content:space-between; margin-top:.4rem; font-size:.8rem; color:#888;">
+                <span>{{ item.percent }}% complété</span>
+                <a href="{{ path('app_theme', {slug: item.theme.slug}) }}">Continuer →</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+{% endif %}
 {% endblock %}
