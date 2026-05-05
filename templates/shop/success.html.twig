@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Paiement confirmé — Knowledge Learning{% endblock %}
+
+{% block body %}
+<div style="max-width:600px; margin:3rem auto; text-align:center;">
+    <div style="font-size:4rem; margin-bottom:1rem;">🎉</div>
+    <h1 style="color:#82b864; margin-bottom:1rem;">Paiement confirmé !</h1>
+
+    <div style="background:#fff; border-radius:8px; padding:2rem; box-shadow:0 2px 8px rgba(0,0,0,.08); margin-bottom:2rem;">
+        {% if type == 'cursus' %}
+            <p style="font-size:1.1rem; color:#384050;">
+                Vous avez maintenant accès à toutes les leçons du cursus<br>
+                <strong style="color:#0074c7;">{{ item.name }}</strong>
+            </p>
+            <a href="{{ path('app_cursus', {slug: item.slug}) }}" class="btn btn-primary" style="margin-top:1.5rem; display:inline-block;">
+                Commencer le cursus →
+            </a>
+        {% else %}
+            <p style="font-size:1.1rem; color:#384050;">
+                Vous avez maintenant accès à la leçon<br>
+                <strong style="color:#0074c7;">{{ item.name }}</strong>
+            </p>
+            <a href="{{ path('app_lesson', {slug: item.slug}) }}" class="btn btn-primary" style="margin-top:1.5rem; display:inline-block;">
+                Accéder à la leçon →
+            </a>
+        {% endif %}
+    </div>
+
+    <a href="{{ path('app_home') }}" style="color:#666; font-size:.9rem;">← Retour aux formations</a>
+</div>
+{% endblock %}
