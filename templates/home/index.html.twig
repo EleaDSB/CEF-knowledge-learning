@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formations — Knowledge Learning{% endblock %}
+
+{% block body %}
+<h1 style="color:#00497c; margin-bottom:1.5rem;">Nos formations</h1>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1.5rem;">
+    {% for theme in themes %}
+    <div style="background:#fff; border-radius:8px; padding:1.5rem; box-shadow:0 2px 8px rgba(0,0,0,.08);">
+        <h2 style="color:#0074c7; margin-bottom:.75rem; font-size:1.2rem;">{{ theme.name }}</h2>
+        <p style="font-size:.9rem; color:#384050; margin-bottom:1rem;">
+            {{ theme.cursus|length }} cursus disponible{{ theme.cursus|length > 1 ? 's' : '' }}
+        </p>
+        <a href="{{ path('app_theme', {slug: theme.slug}) }}" class="btn btn-primary">Voir les cursus</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
