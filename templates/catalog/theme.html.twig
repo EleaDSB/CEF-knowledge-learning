@@ -3,15 +3,30 @@
 {% block title %}{{ theme.name }} — Knowledge Learning{% endblock %}
 
 {% block body %}
-<p><a href="{{ path('app_home') }}">&larr; Retour aux formations</a></p>
-<h1 style="color:#00497c; margin: 1rem 0 1.5rem;">{{ theme.name }}</h1>
+<nav style="font-size:.9rem; margin-bottom:1rem; color:#666;">
+    <a href="{{ path('app_home') }}">Formations</a> &rsaquo; {{ theme.name }}
+</nav>
 
-<div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.5rem;">
+<h1 style="color:#00497c; margin-bottom:1.5rem;">{{ theme.name }}</h1>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem;">
     {% for cursus in theme.cursus %}
-    <div style="background:#fff; border-radius:8px; padding:1.5rem; box-shadow:0 2px 8px rgba(0,0,0,.08);">
-        <h2 style="color:#0074c7; font-size:1.1rem; margin-bottom:.5rem;">{{ cursus.name }}</h2>
-        <p style="font-size:1.1rem; font-weight:bold; color:#384050; margin-bottom:1rem;">{{ cursus.price }} €</p>
-        <a href="{{ path('app_cursus', {slug: cursus.slug}) }}" class="btn btn-primary">Voir le cursus</a>
+    <div style="background:#fff; border-radius:8px; padding:1.5rem; box-shadow:0 2px 8px rgba(0,0,0,.08); display:flex; flex-direction:column; gap:.75rem;">
+        <h2 style="color:#0074c7; font-size:1.15rem;">{{ cursus.name }}</h2>
+
+        <ul style="list-style:none; font-size:.9rem; color:#555; display:flex; flex-direction:column; gap:.3rem;">
+            {% for lesson in cursus.lessons %}
+            <li style="display:flex; justify-content:space-between;">
+                <span>📖 Leçon {{ lesson.position }} : {{ lesson.name }}</span>
+                <span style="color:#0074c7; font-weight:bold; white-space:nowrap; margin-left:.5rem;">{{ lesson.price }} €</span>
+            </li>
+            {% endfor %}
+        </ul>
+
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-top:.5rem;">
+            <span style="font-size:1.1rem; font-weight:bold; color:#384050;">Cursus : {{ cursus.price }} €</span>
+            <a href="{{ path('app_cursus', {slug: cursus.slug}) }}" class="btn btn-primary">Voir le cursus</a>
+        </div>
     </div>
     {% endfor %}
 </div>
