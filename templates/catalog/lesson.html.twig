@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ lesson.name }} — Knowledge Learning{% endblock %}
+
+{% block body %}
+<p><a href="{{ path('app_cursus', {slug: lesson.cursus.slug}) }}">&larr; Retour au cursus</a></p>
+<h1 style="color:#00497c; margin: 1rem 0 1.5rem;">{{ lesson.name }}</h1>
+<p style="color:#384050;">Contenu à venir.</p>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ theme.name }} — Knowledge Learning{% endblock %}
+
+{% block body %}
+<p><a href="{{ path('app_home') }}">&larr; Retour aux formations</a></p>
+<h1 style="color:#00497c; margin: 1rem 0 1.5rem;">{{ theme.name }}</h1>
+
+<div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:1.5rem;">
+    {% for cursus in theme.cursus %}
+    <div style="background:#fff; border-radius:8px; padding:1.5rem; box-shadow:0 2px 8px rgba(0,0,0,.08);">
+        <h2 style="color:#0074c7; font-size:1.1rem; margin-bottom:.5rem;">{{ cursus.name }}</h2>
+        <p style="font-size:1.1rem; font-weight:bold; color:#384050; margin-bottom:1rem;">{{ cursus.price }} €</p>
+        <a href="{{ path('app_cursus', {slug: cursus.slug}) }}" class="btn btn-primary">Voir le cursus</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

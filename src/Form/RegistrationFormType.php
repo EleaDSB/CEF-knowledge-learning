@@ -22,11 +22,11 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('firstname', TextType::class, [
                 'label' => 'Prénom',
-                'constraints' => [new NotBlank(), new Length(['min' => 2, 'max' => 100])],
+                'constraints' => [new NotBlank(), new Length(min: 2, max: 100)],
             ])
             ->add('lastname', TextType::class, [
                 'label' => 'Nom',
-                'constraints' => [new NotBlank(), new Length(['min' => 2, 'max' => 100])],
+                'constraints' => [new NotBlank(), new Length(min: 2, max: 100)],
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Adresse email',
@@ -38,7 +38,7 @@ class RegistrationFormType extends AbstractType
                 'second_options' => ['label' => 'Confirmer le mot de passe'],
                 'constraints' => [
                     new NotBlank(),
-                    new Length(['min' => 8, 'max' => 4096]),
+                    new Length(min: 8, max: 4096),
                 ],
             ])
             ->add('agreeTerms', CheckboxType::class, [

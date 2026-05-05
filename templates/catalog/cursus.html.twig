@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ cursus.name }} — Knowledge Learning{% endblock %}
+
+{% block body %}
+<p><a href="{{ path('app_theme', {slug: cursus.theme.slug}) }}">&larr; Retour à {{ cursus.theme.name }}</a></p>
+<h1 style="color:#00497c; margin: 1rem 0 .5rem;">{{ cursus.name }}</h1>
+<p style="font-size:1.2rem; color:#384050; margin-bottom:1.5rem;">Cursus complet : <strong>{{ cursus.price }} €</strong></p>
+
+<div style="display:flex; flex-direction:column; gap:1rem;">
+    {% for lesson in cursus.lessons %}
+    <div style="background:#fff; border-radius:8px; padding:1.25rem 1.5rem; box-shadow:0 2px 8px rgba(0,0,0,.08); display:flex; justify-content:space-between; align-items:center;">
+        <div>
+            <h3 style="color:#384050; font-size:1rem;">Leçon {{ lesson.position }} : {{ lesson.name }}</h3>
+            <span style="color:#0074c7; font-weight:bold;">{{ lesson.price }} €</span>
+        </div>
+        <a href="{{ path('app_lesson', {slug: lesson.slug}) }}" class="btn btn-primary">Accéder</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
