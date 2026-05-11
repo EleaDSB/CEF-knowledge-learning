@@ -1,0 +1,27 @@
+{% extends 'admin/layout.html.twig' %}
+{% block title %}Modifier {{ user.fullName }} — Admin{% endblock %}
+
+{% block admin_body %}
+<div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;">
+    <a href="{{ path('admin_users') }}" style="color:#666;">← Retour</a>
+    <h1 style="color:#00497c; font-size:1.4rem;">Modifier {{ user.fullName }}</h1>
+</div>
+
+<div style="background:#fff; border-radius:8px; padding:2rem; box-shadow:0 2px 8px rgba(0,0,0,.08); max-width:480px;">
+    <p style="color:#666; font-size:.9rem; margin-bottom:1.5rem;">{{ user.email }}</p>
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.roles) }}
+            {{ form_widget(form.roles) }}
+            {{ form_errors(form.roles) }}
+        </div>
+        <div class="form-group" style="margin-top:1rem;">
+            <label class="checkbox-label">
+                {{ form_widget(form.isVerified) }}
+                {{ form_label(form.isVerified) }}
+            </label>
+        </div>
+        <button type="submit" class="btn btn-primary" style="margin-top:1.5rem;">Enregistrer</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

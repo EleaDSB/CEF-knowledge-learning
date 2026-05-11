@@ -2,14 +2,23 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\ThemeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Represents a top-level training theme (e.g. Music, IT, Gardening).
+ *
+ * A theme groups one or more cursus. When a user completes all lessons across
+ * all cursus of a theme, they earn a Knowledge Learning certification for it.
+ */
 #[ORM\Entity(repositoryClass: ThemeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Theme
 {
+    use TimestampableTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

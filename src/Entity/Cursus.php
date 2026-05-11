@@ -2,15 +2,24 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\CursusRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Represents a training cursus belonging to a theme.
+ *
+ * A cursus bundles an ordered set of lessons and can be purchased as a whole
+ * (granting access to all its lessons) or lesson by lesson.
+ */
 #[ORM\Entity(repositoryClass: CursusRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Cursus
 {
+    use TimestampableTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

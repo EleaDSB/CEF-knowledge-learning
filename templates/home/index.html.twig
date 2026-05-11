@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Formations — Knowledge Learning{% endblock %}
+
+{% block stylesheets %}
+<style>
+    .hero {
+        background: linear-gradient(135deg, #00497c 0%, #0074c7 100%);
+        color: #fff;
+        text-align: center;
+        padding: 3.5rem 2rem 3rem;
+        margin: -2rem -2rem 2.5rem;
+    }
+    .hero h1 { font-size: 2rem; margin-bottom: .75rem; color: #fff; }
+    .hero p  { font-size: 1.05rem; color: #c8e6f5; max-width: 580px; margin: 0 auto 1.5rem; }
+    .hero-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-hero-outline {
+        display: inline-block; padding: .5rem 1.3rem; border-radius: 4px;
+        border: 2px solid #fff; color: #fff; font-family: inherit; font-size: .95rem;
+        transition: background .2s;
+    }
+    .btn-hero-outline:hover { background: rgba(255,255,255,.15); color: #fff; text-decoration: none; }
+
+    .themes-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 1.5rem;
+    }
+    .theme-card {
+        background: #fff; border-radius: 8px; padding: 1.5rem;
+        box-shadow: 0 2px 8px rgba(0,0,0,.08);
+        display: flex; flex-direction: column; gap: .75rem;
+        transition: box-shadow .2s, transform .2s;
+    }
+    .theme-card:hover { box-shadow: 0 6px 20px rgba(0,116,199,.15); transform: translateY(-2px); }
+    .theme-card h2 { color: #0074c7; font-size: 1.2rem; }
+    .theme-card p  { font-size: .9rem; color: #666; flex: 1; }
+    .theme-icon { font-size: 2.2rem; line-height: 1; }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="hero">
+    <h1>Apprenez à votre rythme</h1>
+    <p>Des cursus thématiques conçus pour tous les niveaux. Validez chaque leçon et obtenez votre certification Knowledge Learning.</p>
+    {% if not app.user %}
+    <div class="hero-actions">
+        <a href="{{ path('app_register') }}" class="btn btn-success">Commencer gratuitement</a>
+        <a href="{{ path('app_login') }}" class="btn-hero-outline">Se connecter</a>
+    </div>
+    {% else %}
+    <div class="hero-actions">
+        <a href="{{ path('app_certifications') }}" class="btn btn-success">Mes certifications</a>
+    </div>
+    {% endif %}
+</div>
+
+<h2 style="color:#384050; font-size:1.15rem; margin-bottom:1.25rem; font-weight:bold;">Nos thèmes de formation</h2>
+
+{% set icons = {'Musique': '🎵', 'Informatique': '💻', 'Jardinage': '🌱', 'Cuisine': '🍳'} %}
+
+<div class="themes-grid">
+    {% for theme in themes %}
+    <div class="theme-card">
+        <div class="theme-icon">{{ icons[theme.name] ?? '📚' }}</div>
+        <h2>{{ theme.name }}</h2>
+        <p>{{ theme.cursus|length }} cursus disponible{{ theme.cursus|length > 1 ? 's' : '' }}</p>
+        <a href="{{ path('app_theme', {slug: theme.slug}) }}" class="btn btn-primary">Voir les cursus</a>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion — Knowledge Learning{% endblock %}
+
+{% block body %}
+<div class="form-card">
+    <h1>Connexion</h1>
+
+    {% if error %}
+        <div class="alert alert-error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <form method="post">
+        <div class="form-group">
+            <label for="inputEmail">Adresse email</label>
+            <input type="email" id="inputEmail" name="_username" value="{{ last_username }}" autocomplete="email" required autofocus>
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">Mot de passe</label>
+            <input type="password" id="inputPassword" name="_password" autocomplete="current-password" required>
+        </div>
+        <div class="form-group">
+            <label class="checkbox-label">
+                <input type="checkbox" name="_remember_me">
+                Se souvenir de moi
+            </label>
+        </div>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+        <button type="submit" class="btn btn-primary form-submit">Se connecter</button>
+    </form>
+
+    <div class="form-links">
+        Pas encore de compte ? <a href="{{ path('app_register') }}">S'inscrire</a>
+    </div>
+</div>
+{% endblock %}
