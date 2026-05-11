@@ -1,0 +1,154 @@
+digraph MPD {
+    graph [
+        label     = "Knowledge Learning — Modèle Physique de Données"
+        labelloc  = t
+        fontname  = "Helvetica"
+        fontsize  = 18
+        bgcolor   = "#f1f8fc"
+        pad       = 0.6
+        nodesep   = 0.8
+        ranksep   = 1.2
+        splines   = ortho
+    ]
+    node [
+        shape    = none
+        fontname = "Helvetica"
+        fontsize = 11
+    ]
+    edge [
+        fontname  = "Helvetica"
+        fontsize  = 9
+        color     = "#384050"
+        arrowhead = crow
+        arrowtail = tee
+        dir       = both
+    ]
+
+    /* ─── Tables ─────────────────────────────────────────────────── */
+
+    user [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" BGCOLOR="#ffffff">
+            <TR><TD COLSPAN="3" BGCOLOR="#00497c"><FONT COLOR="white"><B>user</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">INT</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">email</TD><TD ALIGN="LEFT">VARCHAR(180) UNIQUE</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">roles</TD><TD ALIGN="LEFT">JSON</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">password</TD><TD ALIGN="LEFT">VARCHAR</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">firstname</TD><TD ALIGN="LEFT">VARCHAR(100)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">lastname</TD><TD ALIGN="LEFT">VARCHAR(100)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">is_verified</TD><TD ALIGN="LEFT">TINYINT(1)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">activation_token</TD><TD ALIGN="LEFT">VARCHAR(64)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">activation_token_expires_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">created_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">updated_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">created_by</TD><TD ALIGN="LEFT">VARCHAR(180)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">updated_by</TD><TD ALIGN="LEFT">VARCHAR(180)</TD></TR>
+        </TABLE>
+    >]
+
+    theme [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" BGCOLOR="#ffffff">
+            <TR><TD COLSPAN="3" BGCOLOR="#00497c"><FONT COLOR="white"><B>theme</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">INT</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">name</TD><TD ALIGN="LEFT">VARCHAR(100)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">slug</TD><TD ALIGN="LEFT">VARCHAR(120) UNIQUE</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">created_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">updated_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">created_by</TD><TD ALIGN="LEFT">VARCHAR(180)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">updated_by</TD><TD ALIGN="LEFT">VARCHAR(180)</TD></TR>
+        </TABLE>
+    >]
+
+    cursus [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" BGCOLOR="#ffffff">
+            <TR><TD COLSPAN="3" BGCOLOR="#00497c"><FONT COLOR="white"><B>cursus</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">INT</TD></TR>
+            <TR><TD ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT">theme_id</TD><TD ALIGN="LEFT">INT NOT NULL</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">name</TD><TD ALIGN="LEFT">VARCHAR(150)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">slug</TD><TD ALIGN="LEFT">VARCHAR(160) UNIQUE</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">price</TD><TD ALIGN="LEFT">DECIMAL(8,2)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">created_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">updated_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">created_by</TD><TD ALIGN="LEFT">VARCHAR(180)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">updated_by</TD><TD ALIGN="LEFT">VARCHAR(180)</TD></TR>
+        </TABLE>
+    >]
+
+    lesson [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" BGCOLOR="#ffffff">
+            <TR><TD COLSPAN="3" BGCOLOR="#00497c"><FONT COLOR="white"><B>lesson</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">INT</TD></TR>
+            <TR><TD ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT">cursus_id</TD><TD ALIGN="LEFT">INT NOT NULL</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">name</TD><TD ALIGN="LEFT">VARCHAR(150)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">slug</TD><TD ALIGN="LEFT">VARCHAR(160) UNIQUE</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">price</TD><TD ALIGN="LEFT">DECIMAL(8,2)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">position</TD><TD ALIGN="LEFT">INT</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">content</TD><TD ALIGN="LEFT">TEXT</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">video_url</TD><TD ALIGN="LEFT">VARCHAR(255)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">created_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">updated_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">created_by</TD><TD ALIGN="LEFT">VARCHAR(180)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">updated_by</TD><TD ALIGN="LEFT">VARCHAR(180)</TD></TR>
+        </TABLE>
+    >]
+
+    purchase [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" BGCOLOR="#ffffff">
+            <TR><TD COLSPAN="3" BGCOLOR="#0074c7"><FONT COLOR="white"><B>purchase</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">INT</TD></TR>
+            <TR><TD ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT">user_id</TD><TD ALIGN="LEFT">INT NOT NULL</TD></TR>
+            <TR><TD ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT">cursus_id</TD><TD ALIGN="LEFT">INT NULL</TD></TR>
+            <TR><TD ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT">lesson_id</TD><TD ALIGN="LEFT">INT NULL</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">type</TD><TD ALIGN="LEFT">VARCHAR(10)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">amount</TD><TD ALIGN="LEFT">DECIMAL(8,2)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">stripe_payment_id</TD><TD ALIGN="LEFT">VARCHAR(100)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">purchased_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">created_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">updated_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">created_by</TD><TD ALIGN="LEFT">VARCHAR(180)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">updated_by</TD><TD ALIGN="LEFT">VARCHAR(180)</TD></TR>
+        </TABLE>
+    >]
+
+    lesson_progress [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" BGCOLOR="#ffffff">
+            <TR><TD COLSPAN="3" BGCOLOR="#0074c7"><FONT COLOR="white"><B>lesson_progress</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">INT</TD></TR>
+            <TR><TD ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT">user_id</TD><TD ALIGN="LEFT">INT NOT NULL</TD></TR>
+            <TR><TD ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT">lesson_id</TD><TD ALIGN="LEFT">INT NOT NULL</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">is_completed</TD><TD ALIGN="LEFT">TINYINT(1)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">completed_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">created_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">updated_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">created_by</TD><TD ALIGN="LEFT">VARCHAR(180)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">updated_by</TD><TD ALIGN="LEFT">VARCHAR(180)</TD></TR>
+            <TR><TD COLSPAN="3" ALIGN="LEFT"><I>UNIQUE(user_id, lesson_id)</I></TD></TR>
+        </TABLE>
+    >]
+
+    certification [label=<
+        <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" CELLPADDING="5" BGCOLOR="#ffffff">
+            <TR><TD COLSPAN="3" BGCOLOR="#82b864"><FONT COLOR="white"><B>certification</B></FONT></TD></TR>
+            <TR><TD ALIGN="LEFT"><B>PK</B></TD><TD ALIGN="LEFT">id</TD><TD ALIGN="LEFT">INT</TD></TR>
+            <TR><TD ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT">user_id</TD><TD ALIGN="LEFT">INT NOT NULL</TD></TR>
+            <TR><TD ALIGN="LEFT"><B>FK</B></TD><TD ALIGN="LEFT">theme_id</TD><TD ALIGN="LEFT">INT NOT NULL</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">obtained_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">created_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">updated_at</TD><TD ALIGN="LEFT">DATETIME</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">created_by</TD><TD ALIGN="LEFT">VARCHAR(180)</TD></TR>
+            <TR><TD ALIGN="LEFT">  </TD><TD ALIGN="LEFT">updated_by</TD><TD ALIGN="LEFT">VARCHAR(180)</TD></TR>
+            <TR><TD COLSPAN="3" ALIGN="LEFT"><I>UNIQUE(user_id, theme_id)</I></TD></TR>
+        </TABLE>
+    >]
+
+    /* ─── Relations ──────────────────────────────────────────────── */
+
+    theme      -> cursus         [label="1..N" taillabel="1" headlabel="N"]
+    cursus     -> lesson         [label="1..N" taillabel="1" headlabel="N"]
+    user       -> purchase       [label="1..N" taillabel="1" headlabel="N"]
+    cursus     -> purchase       [label="0..N" taillabel="0..1" headlabel="N" style=dashed]
+    lesson     -> purchase       [label="0..N" taillabel="0..1" headlabel="N" style=dashed]
+    user       -> lesson_progress[label="1..N" taillabel="1" headlabel="N"]
+    lesson     -> lesson_progress[label="1..N" taillabel="1" headlabel="N"]
+    user       -> certification  [label="1..N" taillabel="1" headlabel="N"]
+    theme      -> certification  [label="1..N" taillabel="1" headlabel="N"]
+}
