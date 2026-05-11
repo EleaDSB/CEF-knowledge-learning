@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\LessonProgressRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: LessonProgressRepository::class)]
 #[ORM\UniqueConstraint(name: 'user_lesson_unique', columns: ['user_id', 'lesson_id'])]
+#[ORM\HasLifecycleCallbacks]
 class LessonProgress
 {
+    use TimestampableTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

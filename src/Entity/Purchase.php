@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\PurchaseRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PurchaseRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Purchase
 {
+    use TimestampableTrait;
     const TYPE_CURSUS = 'cursus';
     const TYPE_LESSON = 'lesson';
 
