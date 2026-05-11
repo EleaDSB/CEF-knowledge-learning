@@ -1,0 +1,21 @@
+{% extends 'admin/layout.html.twig' %}
+{% block title %}{{ title }} — Admin{% endblock %}
+
+{% block admin_body %}
+<div style="display:flex; align-items:center; gap:1rem; margin-bottom:1.5rem;">
+    <a href="{{ path('admin_cursus') }}" style="color:#666;">← Retour</a>
+    <h1 style="color:#00497c; font-size:1.4rem;">{{ title }}</h1>
+</div>
+<div style="background:#fff; border-radius:8px; padding:2rem; box-shadow:0 2px 8px rgba(0,0,0,.08); max-width:520px;">
+    {{ form_start(form) }}
+        {% for field in form %}
+        <div class="form-group">
+            {{ form_label(field) }}
+            {{ form_widget(field) }}
+            {{ form_errors(field) }}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary" style="margin-top:1rem;">Enregistrer</button>
+    {{ form_end(form) }}
+</div>
+{% endblock %}

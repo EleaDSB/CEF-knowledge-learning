@@ -1,0 +1,55 @@
+{% extends 'admin/layout.html.twig' %}
+{% block title %}Achats — Admin{% endblock %}
+
+{% block admin_body %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+    <h1 style="color:#00497c; font-size:1.4rem;">Achats</h1>
+    <span style="color:#666; font-size:.9rem;">{{ purchases|length }} achat{{ purchases|length > 1 ? 's' : '' }}</span>
+</div>
+
+<div style="background:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.08); overflow:hidden;">
+    <table style="width:100%; border-collapse:collapse; font-size:.9rem;">
+        <thead>
+            <tr style="background:#f1f8fc; border-bottom:2px solid #e0eaf4; color:#0074c7; text-align:left;">
+                <th style="padding:.75rem 1rem;">Utilisateur</th>
+                <th style="padding:.75rem 1rem;">Article</th>
+                <th style="padding:.75rem 1rem;">Type</th>
+                <th style="padding:.75rem 1rem;">Montant</th>
+                <th style="padding:.75rem 1rem;">Date</th>
+                <th style="padding:.75rem 1rem;">ID Stripe</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchase in purchases %}
+            <tr style="border-bottom:1px solid #f0f4f8;">
+                <td style="padding:.65rem 1rem;">
+                    <div style="font-weight:bold;">{{ purchase.user.fullName }}</div>
+                    <div style="color:#888; font-size:.82rem;">{{ purchase.user.email }}</div>
+                </td>
+                <td style="padding:.65rem 1rem;">
+                    {% if purchase.cursus %}{{ purchase.cursus.name }}
+                    {% elseif purchase.lesson %}{{ purchase.lesson.name }}
+                    {% endif %}
+                </td>
+                <td style="padding:.65rem 1rem;">
+                    {% if purchase.type == 'cursus' %}
+                        <span style="background:#0074c7; color:#fff; padding:.15rem .5rem; border-radius:3px; font-size:.82rem;">Cursus</span>
+                    {% else %}
+                        <span style="background:#82b864; color:#fff; padding:.15rem .5rem; border-radius:3px; font-size:.82rem;">Leçon</span>
+                    {% endif %}
+                </td>
+                <td style="padding:.65rem 1rem; font-weight:bold; color:#82b864;">{{ purchase.amount }} €</td>
+                <td style="padding:.65rem 1rem; color:#888; font-size:.85rem;">{{ purchase.purchasedAt|date('d/m/Y H:i') }}</td>
+                <td style="padding:.65rem 1rem; color:#aaa; font-size:.78rem; font-family:monospace;">
+                    {{ purchase.stripePaymentId ? purchase.stripePaymentId|slice(0, 24) ~ '…' : '—' }}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if purchases is empty %}
+    <p style="text-align:center; padding:2rem; color:#888;">Aucun achat pour le moment.</p>
+    {% endif %}
+</div>
+{% endblock %}

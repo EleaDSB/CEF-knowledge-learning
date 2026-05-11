@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div style="display:flex; gap:0; min-height:calc(100vh - 128px); margin:-2rem; overflow:hidden;">
+
+    {# Sidebar #}
+    <nav style="width:220px; flex-shrink:0; background:#00497c; padding:1.5rem 0; display:flex; flex-direction:column; gap:.25rem;">
+        <div style="padding:.5rem 1.5rem; font-size:.75rem; color:#82c5e0; text-transform:uppercase; letter-spacing:.08em; margin-bottom:.5rem;">Administration</div>
+
+        {% set nav = [
+            {label: 'Dashboard',     route: 'admin_dashboard',  icon: '📊'},
+            {label: 'Utilisateurs',  route: 'admin_users',      icon: '👥'},
+            {label: 'Thèmes',        route: 'admin_themes',     icon: '📚'},
+            {label: 'Cursus',        route: 'admin_cursus',     icon: '🗂'},
+            {label: 'Leçons',        route: 'admin_lessons',    icon: '📖'},
+            {label: 'Achats',        route: 'admin_purchases',  icon: '💳'},
+        ] %}
+
+        {% for item in nav %}
+        <a href="{{ path(item.route) }}"
+           style="display:flex; align-items:center; gap:.6rem; padding:.55rem 1.5rem; color:#c8e6f5; font-size:.9rem; text-decoration:none;
+                  {% if app.request.attributes.get('_route') == item.route %}background:rgba(255,255,255,.15); color:#fff;{% endif %}">
+            {{ item.icon }} {{ item.label }}
+        </a>
+        {% endfor %}
+
+        <div style="margin-top:auto; padding:1.5rem 1.5rem 0;">
+            <a href="{{ path('app_home') }}" style="color:#82c5e0; font-size:.85rem; text-decoration:none;">← Retour au site</a>
+        </div>
+    </nav>
+
+    {# Content #}
+    <div style="flex:1; padding:2rem; overflow-y:auto;">
+        {% block admin_body %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

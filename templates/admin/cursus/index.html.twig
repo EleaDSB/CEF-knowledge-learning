@@ -1,0 +1,40 @@
+{% extends 'admin/layout.html.twig' %}
+{% block title %}Cursus — Admin{% endblock %}
+
+{% block admin_body %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+    <h1 style="color:#00497c; font-size:1.4rem;">Cursus</h1>
+    <a href="{{ path('admin_cursus_new') }}" class="btn btn-success">+ Nouveau cursus</a>
+</div>
+
+<div style="background:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.08); overflow:hidden;">
+    <table style="width:100%; border-collapse:collapse; font-size:.9rem;">
+        <thead>
+            <tr style="background:#f1f8fc; border-bottom:2px solid #e0eaf4; color:#0074c7; text-align:left;">
+                <th style="padding:.75rem 1rem;">Nom</th>
+                <th style="padding:.75rem 1rem;">Thème</th>
+                <th style="padding:.75rem 1rem;">Prix</th>
+                <th style="padding:.75rem 1rem;">Leçons</th>
+                <th style="padding:.75rem 1rem;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cursus in cursusList %}
+            <tr style="border-bottom:1px solid #f0f4f8;">
+                <td style="padding:.65rem 1rem; font-weight:bold;">{{ cursus.name }}</td>
+                <td style="padding:.65rem 1rem; color:#555;">{{ cursus.theme.name }}</td>
+                <td style="padding:.65rem 1rem; color:#0074c7; font-weight:bold;">{{ cursus.price }} €</td>
+                <td style="padding:.65rem 1rem;">{{ cursus.lessons|length }}</td>
+                <td style="padding:.65rem 1rem; display:flex; gap:.5rem;">
+                    <a href="{{ path('admin_cursus_edit', {id: cursus.id}) }}" class="btn btn-primary" style="font-size:.8rem; padding:.3rem .7rem;">Modifier</a>
+                    <form method="post" action="{{ path('admin_cursus_delete', {id: cursus.id}) }}" onsubmit="return confirm('Supprimer ce cursus ?')">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete_cursus_' ~ cursus.id) }}">
+                        <button type="submit" class="btn btn-danger" style="font-size:.8rem; padding:.3rem .7rem;">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

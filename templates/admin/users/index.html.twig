@@ -1,0 +1,48 @@
+{% extends 'admin/layout.html.twig' %}
+{% block title %}Utilisateurs — Admin{% endblock %}
+
+{% block admin_body %}
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem;">
+    <h1 style="color:#00497c; font-size:1.4rem;">Utilisateurs</h1>
+    <span style="color:#666; font-size:.9rem;">{{ users|length }} utilisateur{{ users|length > 1 ? 's' : '' }}</span>
+</div>
+
+<div style="background:#fff; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,.08); overflow:hidden;">
+    <table style="width:100%; border-collapse:collapse; font-size:.9rem;">
+        <thead>
+            <tr style="background:#f1f8fc; border-bottom:2px solid #e0eaf4; color:#0074c7; text-align:left;">
+                <th style="padding:.75rem 1rem;">Nom</th>
+                <th style="padding:.75rem 1rem;">Email</th>
+                <th style="padding:.75rem 1rem;">Statut</th>
+                <th style="padding:.75rem 1rem;">Rôle</th>
+                <th style="padding:.75rem 1rem;">Inscrit le</th>
+                <th style="padding:.75rem 1rem;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr style="border-bottom:1px solid #f0f4f8;">
+                <td style="padding:.65rem 1rem; font-weight:bold;">{{ user.fullName }}</td>
+                <td style="padding:.65rem 1rem; color:#555;">{{ user.email }}</td>
+                <td style="padding:.65rem 1rem;">
+                    {% if user.isVerified %}<span style="color:#82b864; font-size:.85rem;">✓ Activé</span>
+                    {% else %}<span style="color:#cd2c2e; font-size:.85rem;">✗ Non activé</span>{% endif %}
+                </td>
+                <td style="padding:.65rem 1rem; font-size:.82rem; color:#555;">
+                    {% if 'ROLE_ADMIN' in user.roles %}<span style="background:#cd2c2e; color:#fff; padding:.15rem .5rem; border-radius:3px;">Admin</span>
+                    {% else %}<span style="background:#0074c7; color:#fff; padding:.15rem .5rem; border-radius:3px;">User</span>{% endif %}
+                </td>
+                <td style="padding:.65rem 1rem; color:#888; font-size:.85rem;">{{ user.createdAt|date('d/m/Y') }}</td>
+                <td style="padding:.65rem 1rem; display:flex; gap:.5rem;">
+                    <a href="{{ path('admin_user_edit', {id: user.id}) }}" class="btn btn-primary" style="font-size:.8rem; padding:.3rem .7rem;">Modifier</a>
+                    <form method="post" action="{{ path('admin_user_delete', {id: user.id}) }}" onsubmit="return confirm('Supprimer cet utilisateur ?')">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete_user_' ~ user.id) }}">
+                        <button type="submit" class="btn btn-danger" style="font-size:.8rem; padding:.3rem .7rem;">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
