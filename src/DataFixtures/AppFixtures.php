@@ -17,16 +17,15 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
-        $themes = $this->loadThemes($manager);
+        ['themes' => $themes, 'cursusGuitare' => $cursusGuitare] = $this->loadThemes($manager);
         $manager->flush();
 
         $admin = $this->createAdmin($manager);
         $client = $this->createClient($manager);
         $manager->flush();
 
-        $firstCursus = $themes['Musique']->getCursus()->first();
-        if ($firstCursus) {
-            $this->createSamplePurchase($manager, $client, $firstCursus);
+        if ($cursusGuitare) {
+            $this->createSamplePurchase($manager, $client, $cursusGuitare);
         }
         $manager->flush();
     }
@@ -81,6 +80,7 @@ class AppFixtures extends Fixture
         ];
 
         $themes = [];
+        $cursusGuitare = null;
         foreach ($data as $themeName => $themeData) {
             $theme = new Theme();
             $theme->setName($themeName);
@@ -96,6 +96,10 @@ class AppFixtures extends Fixture
                 $cursus->setTheme($theme);
                 $manager->persist($cursus);
 
+                if ($cursusData['slug'] === 'cursus-guitare') {
+                    $cursusGuitare = $cursus;
+                }
+
                 foreach ($cursusData['lessons'] as $lessonData) {
                     $lesson = new Lesson();
                     $lesson->setName($lessonData['name']);
@@ -109,7 +113,7 @@ class AppFixtures extends Fixture
             }
         }
 
-        return $themes;
+        return ['themes' => $themes, 'cursusGuitare' => $cursusGuitare];
     }
 
     private function createAdmin(ObjectManager $manager): User
