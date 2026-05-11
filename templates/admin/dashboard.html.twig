@@ -1,47 +1,46 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin/layout.html.twig' %}
+{% block title %}Dashboard — Admin{% endblock %}
 
-{% block title %}Dashboard Admin — Knowledge Learning{% endblock %}
+{% block admin_body %}
+<h1 style="color:#00497c; margin-bottom:1.5rem; font-size:1.4rem;">Tableau de bord</h1>
 
-{% block body %}
-<h1 style="color:#00497c; margin-bottom:1.5rem;">Tableau de bord</h1>
-
-<div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:1.5rem; margin-bottom:2rem;">
+<div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(180px,1fr)); gap:1.5rem; margin-bottom:2rem;">
     <div style="background:#0074c7; color:#fff; border-radius:8px; padding:1.5rem; text-align:center;">
-        <div style="font-size:2rem; font-weight:bold;">{{ totalUsers }}</div>
-        <div>Utilisateurs</div>
+        <div style="font-size:2.2rem; font-weight:bold;">{{ totalUsers }}</div>
+        <div style="font-size:.9rem; opacity:.9;">Utilisateurs</div>
     </div>
     <div style="background:#82b864; color:#fff; border-radius:8px; padding:1.5rem; text-align:center;">
-        <div style="font-size:2rem; font-weight:bold;">{{ totalPurchases }}</div>
-        <div>Achats</div>
+        <div style="font-size:2.2rem; font-weight:bold;">{{ totalPurchases }}</div>
+        <div style="font-size:.9rem; opacity:.9;">Achats</div>
     </div>
 </div>
 
 <div style="background:#fff; border-radius:8px; padding:1.5rem; box-shadow:0 2px 8px rgba(0,0,0,.08);">
-    <h2 style="color:#00497c; margin-bottom:1rem; font-size:1.1rem;">Derniers inscrits</h2>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+        <h2 style="color:#00497c; font-size:1.05rem;">Derniers inscrits</h2>
+        <a href="{{ path('admin_users') }}" style="font-size:.85rem;">Voir tous →</a>
+    </div>
     <table style="width:100%; border-collapse:collapse; font-size:.9rem;">
         <thead>
-            <tr style="border-bottom:2px solid #e0eaf4; color:#0074c7;">
-                <th style="text-align:left; padding:.5rem;">Nom</th>
-                <th style="text-align:left; padding:.5rem;">Email</th>
-                <th style="text-align:left; padding:.5rem;">Statut</th>
-                <th style="text-align:left; padding:.5rem;">Rôle</th>
-                <th style="text-align:left; padding:.5rem;">Inscrit le</th>
+            <tr style="border-bottom:2px solid #e0eaf4; color:#0074c7; text-align:left;">
+                <th style="padding:.5rem;">Nom</th>
+                <th style="padding:.5rem;">Email</th>
+                <th style="padding:.5rem;">Statut</th>
+                <th style="padding:.5rem;">Rôle</th>
+                <th style="padding:.5rem;">Inscrit le</th>
             </tr>
         </thead>
         <tbody>
             {% for user in recentUsers %}
             <tr style="border-bottom:1px solid #f0f4f8;">
                 <td style="padding:.5rem;">{{ user.fullName }}</td>
-                <td style="padding:.5rem;">{{ user.email }}</td>
+                <td style="padding:.5rem; color:#666;">{{ user.email }}</td>
                 <td style="padding:.5rem;">
-                    {% if user.isVerified %}
-                        <span style="color:#82b864;">✓ Activé</span>
-                    {% else %}
-                        <span style="color:#cd2c2e;">✗ Non activé</span>
-                    {% endif %}
+                    {% if user.isVerified %}<span style="color:#82b864;">✓ Activé</span>
+                    {% else %}<span style="color:#cd2c2e;">✗ Non activé</span>{% endif %}
                 </td>
-                <td style="padding:.5rem;">{{ user.roles|join(', ') }}</td>
-                <td style="padding:.5rem;">{{ user.createdAt|date('d/m/Y') }}</td>
+                <td style="padding:.5rem; font-size:.85rem;">{{ user.roles|join(', ') }}</td>
+                <td style="padding:.5rem; color:#666;">{{ user.createdAt|date('d/m/Y') }}</td>
             </tr>
             {% endfor %}
         </tbody>
