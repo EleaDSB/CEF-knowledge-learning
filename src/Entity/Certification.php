@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\CertificationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: CertificationRepository::class)]
 #[ORM\UniqueConstraint(name: 'user_theme_unique', columns: ['user_id', 'theme_id'])]
+#[ORM\HasLifecycleCallbacks]
 class Certification
 {
+    use TimestampableTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

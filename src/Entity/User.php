@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\TimestampableTrait;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,9 +13,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields: ['email'], message: 'Un compte existe déjà avec cet email.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    use TimestampableTrait;
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -44,9 +47,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $activationTokenExpiresAt = null;
 
-    #[ORM\Column]
-    private \DateTimeImmutable $createdAt;
-
     #[ORM\OneToMany(targetEntity: Purchase::class, mappedBy: 'user')]
     private Collection $purchases;
 
@@ -61,7 +61,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->purchases = new ArrayCollection();
         $this->lessonProgresses = new ArrayCollection();
         $this->certifications = new ArrayCollection();
-        $this->createdAt = new \DateTimeImmutable();
         $this->roles = ['ROLE_USER'];
     }
 
@@ -99,8 +98,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getActivationTokenExpiresAt(): ?\DateTimeImmutable { return $this->activationTokenExpiresAt; }
     public function setActivationTokenExpiresAt(?\DateTimeImmutable $activationTokenExpiresAt): static { $this->activationTokenExpiresAt = $activationTokenExpiresAt; return $this; }
-
-    public function getCreatedAt(): \DateTimeImmutable { return $this->createdAt; }
 
     public function getPurchases(): Collection { return $this->purchases; }
     public function getLessonProgresses(): Collection { return $this->lessonProgresses; }
