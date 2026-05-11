@@ -18,8 +18,21 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+/**
+ * Handles the public course catalog: themes, cursus, lessons and lesson validation.
+ *
+ * Lesson access is controlled by LessonVoter (requires a valid purchase).
+ * Lesson validation triggers the automatic certification logic.
+ */
 class CatalogController extends AbstractController
 {
+    /**
+     * Displays all cursus belonging to a theme.
+     *
+     * @param string          $slug            The theme's URL slug.
+     * @param ThemeRepository $themeRepository Data access for themes.
+     * @return Response The rendered theme page or a 404 response.
+     */
     #[Route('/theme/{slug}', name: 'app_theme')]
     public function theme(string $slug, ThemeRepository $themeRepository): Response
     {

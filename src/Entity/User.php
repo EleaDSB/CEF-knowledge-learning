@@ -11,6 +11,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Represents a registered platform user.
+ *
+ * Users can hold ROLE_USER (client) or ROLE_ADMIN. A new account is unverified
+ * until the user clicks the activation link sent by email. Only verified users
+ * can purchase content.
+ */
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
 #[ORM\HasLifecycleCallbacks]

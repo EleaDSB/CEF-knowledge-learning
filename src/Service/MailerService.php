@@ -8,6 +8,12 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+/**
+ * Sends transactional emails for the Knowledge Learning platform.
+ *
+ * Wraps Symfony Mailer with application-specific templates and routing,
+ * keeping email logic out of controllers.
+ */
 class MailerService
 {
     public function __construct(
@@ -15,6 +21,14 @@ class MailerService
         private UrlGeneratorInterface $urlGenerator,
     ) {}
 
+    /**
+     * Sends the account-activation email to a newly registered user.
+     *
+     * The email contains a signed URL (valid 24 h) that activates the account
+     * by hitting the app_verify_email route.
+     *
+     * @param User $user The unverified user who just registered.
+     */
     public function sendActivationEmail(User $user): void
     {
         $activationUrl = $this->urlGenerator->generate(
