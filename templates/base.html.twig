@@ -36,7 +36,7 @@
                 align-items: center;
                 gap: .5rem;
             }
-            .navbar-brand img { height: 40px; }
+            .navbar-brand img { height: 40px; border-radius: 4px; }
             .navbar-brand:hover { color: #f1f8fc; text-decoration: none; }
             .navbar-nav {
                 display: flex;
@@ -90,7 +90,7 @@
     <body>
         <nav class="navbar">
             <a href="{{ path('app_home') }}" class="navbar-brand">
-                <img src="{{ asset('images/logo.svg') }}" alt="Knowledge Learning" height="40">
+                <img src="{{ asset('images/logo.jpg') }}" alt="Knowledge Learning" height="40">
             </a>
             <ul class="navbar-nav">
                 <li><a href="{{ path('app_home') }}">Formations</a></li>
