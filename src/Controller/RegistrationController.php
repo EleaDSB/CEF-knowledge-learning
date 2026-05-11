@@ -13,8 +13,23 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
+/**
+ * Handles user registration and email-based account activation.
+ *
+ * On successful registration a signed activation token (valid 24 h) is generated
+ * and sent by email. The account remains locked until the token is consumed.
+ */
 class RegistrationController extends AbstractController
 {
+    /**
+     * Displays and processes the registration form.
+     *
+     * @param Request                     $request        The current HTTP request.
+     * @param UserPasswordHasherInterface $passwordHasher Hashes the plain-text password.
+     * @param EntityManagerInterface      $em             Persists the new user.
+     * @param MailerService               $mailer         Sends the activation email.
+     * @return Response The registration form or a redirect after success.
+     */
     #[Route('/inscription', name: 'app_register')]
     public function register(
         Request $request,
@@ -51,6 +66,14 @@ class RegistrationController extends AbstractController
         ]);
     }
 
+    /**
+     * Activates a user account by consuming a time-limited email token.
+     *
+     * @param string                 $token          The activation token from the email link.
+     * @param UserRepository         $userRepository Looks up the user by token.
+     * @param EntityManagerInterface $em             Persists the verified state.
+     * @return Response A redirect to login on success, or to registration on failure.
+     */
     #[Route('/activation/{token}', name: 'app_verify_email')]
     public function verifyEmail(string $token, UserRepository $userRepository, EntityManagerInterface $em): Response
     {

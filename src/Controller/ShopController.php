@@ -16,9 +16,17 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
+/**
+ * Handles Stripe Checkout sessions and post-payment success for cursus and lessons.
+ *
+ * All routes require ROLE_USER. Unverified accounts are rejected before a Stripe
+ * session is created. The success route records the Purchase without contacting
+ * Stripe again (sandbox: session_id is stored as-is).
+ */
 #[IsGranted('ROLE_USER')]
 class ShopController extends AbstractController
 {
+    /** @param string $stripeSecretKey Injected from the stripe_secret_key parameter. */
     public function __construct(private string $stripeSecretKey) {}
 
     #[Route('/acheter/cursus/{id}', name: 'app_checkout_cursus')]

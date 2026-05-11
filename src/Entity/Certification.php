@@ -6,6 +6,13 @@ use App\Entity\Traits\TimestampableTrait;
 use App\Repository\CertificationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Represents a Knowledge Learning certification earned by a user.
+ *
+ * A certification is automatically created when the user has validated every
+ * lesson across all cursus within a theme. The unique constraint on
+ * (user_id, theme_id) prevents duplicate certifications.
+ */
 #[ORM\Entity(repositoryClass: CertificationRepository::class)]
 #[ORM\UniqueConstraint(name: 'user_theme_unique', columns: ['user_id', 'theme_id'])]
 #[ORM\HasLifecycleCallbacks]

@@ -6,6 +6,12 @@ use App\Entity\Traits\TimestampableTrait;
 use App\Repository\LessonProgressRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Tracks the completion status of a lesson for a given user.
+ *
+ * A unique constraint on (user_id, lesson_id) prevents duplicate records.
+ * When isCompleted is set to true, completedAt is automatically stamped.
+ */
 #[ORM\Entity(repositoryClass: LessonProgressRepository::class)]
 #[ORM\UniqueConstraint(name: 'user_lesson_unique', columns: ['user_id', 'lesson_id'])]
 #[ORM\HasLifecycleCallbacks]
