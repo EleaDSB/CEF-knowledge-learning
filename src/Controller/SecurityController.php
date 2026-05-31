@@ -7,8 +7,19 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * Handles user authentication (login and logout).
+ */
 class SecurityController extends AbstractController
 {
+    /**
+     * Displays the login form and handles authentication errors.
+     *
+     * Redirects already authenticated users to the home page.
+     *
+     * @param AuthenticationUtils $authenticationUtils Provides last username and authentication error.
+     * @return Response The rendered login page or a redirect if already logged in.
+     */
     #[Route('/connexion', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -22,6 +33,11 @@ class SecurityController extends AbstractController
         ]);
     }
 
+    /**
+     * Logout endpoint — intercepted by the Symfony security firewall.
+     *
+     * This method is never executed; the firewall handles the logout process.
+     */
     #[Route('/deconnexion', name: 'app_logout')]
     public function logout(): void
     {
