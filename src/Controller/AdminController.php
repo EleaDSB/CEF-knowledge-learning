@@ -31,7 +31,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ADMIN')]
 class AdminController extends AbstractController
 {
-    // ── Dashboard ──────────────────────────────────────────────────────────
+    // ── Dashboard ─────────────────────────────────────────────────────────
 
     /**
      * Displays the admin dashboard with global statistics.
@@ -50,7 +50,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    // ── Utilisateurs ───────────────────────────────────────────────────────
+    // ── Users ──────────────────────────────────────────────────────────────
 
     /**
      * Lists all registered users sorted by creation date.
@@ -116,7 +116,7 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_users');
     }
 
-    // ── Thèmes ─────────────────────────────────────────────────────────────
+    // ── Themes ─────────────────────────────────────────────────────────────
 
     /**
      * Lists all training themes.
@@ -296,7 +296,7 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_cursus');
     }
 
-    // ── Leçons ─────────────────────────────────────────────────────────────
+    // ── Lessons ────────────────────────────────────────────────────────────
 
     /**
      * Lists all lessons sorted by ID.
@@ -386,7 +386,7 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_lessons');
     }
 
-    // ── Achats ─────────────────────────────────────────────────────────────
+    // ── Purchases ──────────────────────────────────────────────────────────
 
     /**
      * Lists all purchases sorted by purchase date (most recent first).

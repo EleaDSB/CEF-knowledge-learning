@@ -18,7 +18,7 @@ class PurchaseTest extends TestHelper
 
     public function testUnverifiedUserCannotPurchase(): void
     {
-        // Créer un utilisateur connecté mais non activé
+        // Create a logged-in but unverified user
         $user = new User();
         $user->setEmail('unverif_buyer@test.com');
         $user->setFirstname('Test');
@@ -39,7 +39,7 @@ class PurchaseTest extends TestHelper
         $cursus = $this->getFirstCursus();
         self::$client->request('GET', '/acheter/cursus/' . $cursus->getId());
 
-        // Redirigé vers home avec message d'erreur (compte non activé)
+        // Redirected to home with an error message (account not verified)
         $this->assertResponseRedirects('/');
         self::$client->followRedirect();
         $this->assertSelectorExists('.alert-error');
@@ -47,7 +47,7 @@ class PurchaseTest extends TestHelper
 
     public function testPurchaseSuccessCreatesPurchaseRecord(): void
     {
-        // Se connecter avec le client (compte activé)
+        // Log in with the fixture client (verified account)
         self::$client->request('GET', '/connexion');
         self::$client->submitForm('Se connecter', [
             '_username' => 'client@example.com',
@@ -55,7 +55,7 @@ class PurchaseTest extends TestHelper
         ]);
         self::$client->followRedirect();
 
-        // Utiliser un cursus non acheté par le client (cursus-dev-web)
+        // Use a cursus not yet purchased by the client (cursus-dev-web)
         $cursus = self::$em->getRepository(\App\Entity\Cursus::class)->findOneBy(['slug' => 'cursus-dev-web']);
 
         $purchasesBefore = count(self::$em->getRepository(Purchase::class)->findAll());
@@ -77,7 +77,7 @@ class PurchaseTest extends TestHelper
         ]);
         self::$client->followRedirect();
 
-        // Utiliser une leçon d'un cursus non acheté (html-css dans cursus-dev-web)
+        // Use a lesson from an unpurchased cursus (html-css in cursus-dev-web)
         $lesson = self::$em->getRepository(\App\Entity\Lesson::class)->findOneBy(['slug' => 'html-css']);
         $purchasesBefore = count(self::$em->getRepository(Purchase::class)->findAll());
 
@@ -91,7 +91,7 @@ class PurchaseTest extends TestHelper
 
     public function testAccessToPurchasedLesson(): void
     {
-        // Le client de fixture a déjà acheté le premier cursus
+        // The fixture client already purchased the first cursus
         self::$client->request('GET', '/connexion');
         self::$client->submitForm('Se connecter', [
             '_username' => 'client@example.com',
@@ -108,7 +108,7 @@ class PurchaseTest extends TestHelper
 
     public function testAccessToUnpurchasedLessonIsBlocked(): void
     {
-        // Créer un utilisateur sans achats
+        // Create a verified user with no purchases
         $this->createVerifiedUser('nopurchase@test.com');
 
         self::$client->request('GET', '/connexion');
@@ -118,12 +118,12 @@ class PurchaseTest extends TestHelper
         ]);
         self::$client->followRedirect();
 
-        // Récupérer une leçon d'un cursus non acheté
+        // Fetch a lesson from an unpurchased cursus
         $cursus = self::$em->getRepository(\App\Entity\Cursus::class)->findOneBy(['slug' => 'cursus-dev-web']);
         $lesson = $cursus->getLessons()->first();
 
         self::$client->request('GET', '/lecon/' . $lesson->getSlug());
-        // Redirige vers la page cursus avec message d'erreur
+        // Redirected to the cursus page with an error message
         $this->assertResponseRedirects('/cursus/' . $cursus->getSlug());
     }
 }

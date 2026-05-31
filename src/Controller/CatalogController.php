@@ -135,7 +135,7 @@ class CatalogController extends AbstractController
         $progress->setIsCompleted(true);
         $em->flush();
 
-        // Auto-validation du cursus si toutes les leçons sont validées
+        // Auto-validate the cursus if all its lessons are completed
         $cursus = $lesson->getCursus();
         $totalLessons = $cursus->getLessons()->count();
         $completedLessons = $progressRepository->countCompletedForCursus($user, $cursus);

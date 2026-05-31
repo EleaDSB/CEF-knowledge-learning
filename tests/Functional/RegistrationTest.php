@@ -46,7 +46,7 @@ class RegistrationTest extends TestHelper
             'registration_form[agreeTerms]'           => true,
         ]);
 
-        // Symfony 7 renvoie 422 pour les erreurs de validation de formulaire
+        // Symfony 7 returns 422 for form validation errors
         $this->assertResponseStatusCodeSame(422);
         $this->assertSelectorExists('.form-error, ul li, .invalid-feedback', 'Une erreur de validation doit s\'afficher');
     }
@@ -63,7 +63,7 @@ class RegistrationTest extends TestHelper
             'registration_form[agreeTerms]'           => true,
         ]);
 
-        // Symfony 7 renvoie 422 pour les erreurs de validation de formulaire
+        // Symfony 7 returns 422 for form validation errors
         $this->assertResponseStatusCodeSame(422);
         $user = self::$em->getRepository(User::class)->findOneBy(['email' => 'bob@test.com']);
         $this->assertNull($user, 'L\'utilisateur ne doit pas être créé avec un mot de passe trop court');

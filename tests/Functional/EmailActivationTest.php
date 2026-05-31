@@ -9,7 +9,7 @@ class EmailActivationTest extends TestHelper
 {
     public function testValidTokenActivatesAccount(): void
     {
-        // Créer un utilisateur non activé avec token
+        // Create an unverified user with a valid activation token
         $user = new User();
         $user->setEmail('unverified@test.com');
         $user->setFirstname('Non');
@@ -59,7 +59,7 @@ class EmailActivationTest extends TestHelper
 
     public function testUnverifiedUserCannotPurchase(): void
     {
-        // Créer un utilisateur non activé
+        // Create an unverified user with no token
         $user = new User();
         $user->setEmail('noverif@test.com');
         $user->setFirstname('No');
@@ -68,8 +68,7 @@ class EmailActivationTest extends TestHelper
         self::$em->persist($user);
         self::$em->flush();
 
-        // Simuler la connexion (nécessite compte activé pour tester le blocage)
-        // → on vérifie que le flag isVerified est bien false
+        // Verify that isVerified defaults to false without going through login
         $this->assertFalse($user->isVerified());
         $this->assertNull($user->getActivationToken(), 'Token non défini avant inscription');
     }
