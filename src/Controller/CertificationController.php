@@ -26,7 +26,7 @@ class CertificationController extends AbstractController
         $certifications = $certificationRepository->findByUser($user);
         $certifiedThemeIds = array_map(fn($c) => $c->getTheme()->getId(), $certifications);
 
-        // Pour chaque thème non certifié, calculer la progression
+        // For each uncertified theme, compute the lesson completion progress
         $progressByTheme = [];
         foreach ($themeRepository->findAll() as $theme) {
             if (in_array($theme->getId(), $certifiedThemeIds)) {

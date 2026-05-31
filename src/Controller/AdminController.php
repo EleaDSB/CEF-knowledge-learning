@@ -25,7 +25,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 #[IsGranted('ROLE_ADMIN')]
 class AdminController extends AbstractController
 {
-    // ── Dashboard ──────────────────────────────────────────────────────────
+    // ── Dashboard ─────────────────────────────────────────────────────────
 
     #[Route('', name: 'admin_dashboard')]
     public function dashboard(UserRepository $userRepository, PurchaseRepository $purchaseRepository): Response
@@ -37,7 +37,7 @@ class AdminController extends AbstractController
         ]);
     }
 
-    // ── Utilisateurs ───────────────────────────────────────────────────────
+    // ── Users ──────────────────────────────────────────────────────────────
 
     #[Route('/utilisateurs', name: 'admin_users')]
     public function users(UserRepository $userRepository): Response
@@ -79,7 +79,7 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_users');
     }
 
-    // ── Thèmes ─────────────────────────────────────────────────────────────
+    // ── Themes ─────────────────────────────────────────────────────────────
 
     #[Route('/themes', name: 'admin_themes')]
     public function themes(ThemeRepository $themeRepository): Response
@@ -197,7 +197,7 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_cursus');
     }
 
-    // ── Leçons ─────────────────────────────────────────────────────────────
+    // ── Lessons ────────────────────────────────────────────────────────────
 
     #[Route('/lecons', name: 'admin_lessons')]
     public function lessons(LessonRepository $lessonRepository): Response
@@ -256,7 +256,7 @@ class AdminController extends AbstractController
         return $this->redirectToRoute('admin_lessons');
     }
 
-    // ── Achats ─────────────────────────────────────────────────────────────
+    // ── Purchases ──────────────────────────────────────────────────────────
 
     #[Route('/achats', name: 'admin_purchases')]
     public function purchases(PurchaseRepository $purchaseRepository): Response
