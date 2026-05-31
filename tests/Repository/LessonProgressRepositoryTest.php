@@ -58,7 +58,7 @@ class LessonProgressRepositoryTest extends TestHelper
         $user   = $this->createVerifiedUser('count2@test.com');
         $cursus = static::getContainer()->get(CursusRepository::class)->findBySlug('cursus-dev-web');
 
-        // Valider 1 leçon sur 2
+        // Complete 1 out of 2 lessons
         $lesson = $cursus->getLessons()->first();
         $progress = new LessonProgress();
         $progress->setUser($user);
