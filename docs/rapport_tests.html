@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Rapport de tests — Knowledge Learning</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@5/github-markdown.min.css" />
+  <style>body{max-width:900px;margin:40px auto;padding:0 20px;font-family:sans-serif} table{border-collapse:collapse;width:100%} td,th{border:1px solid #ddd;padding:8px} tr:nth-child(even){background:#f9f9f9} th{background:#0074c7;color:white} h1{color:#00497c} h2{color:#0074c7;border-bottom:2px solid #0074c7} h3{color:#384050} pre{background:#f4f4f4;padding:1em;border-radius:4px}</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Rapport de tests — Knowledge Learning</h1>
+</header>
+<h1 id="rapport-de-tests-unitaires-knowledge-learning">Rapport de tests
+unitaires — Knowledge Learning</h1>
+<p><strong>Projet :</strong> Knowledge Learning — Plateforme e-learning
+/ e-commerce <strong>Auteur :</strong> Elea De Sousa <strong>Framework
+de tests :</strong> PHPUnit 13.1.8 <strong>Date :</strong> Juin 2026
+<strong>Résultat global :</strong> 50 tests — 92 assertions — 0
+échec</p>
+<hr />
+<h2 id="tests-de-repository-29-tests">Tests de Repository (29
+tests)</h2>
+<p>Tests d’intégration sur base de données MySQL réelle
+(<code>knowledge_learning_test</code>), rechargée via les fixtures avant
+chaque suite.</p>
+<h3 id="certificationrepository-4-tests">CertificationRepository (4
+tests)</h3>
+<ul>
+<li>✅ Find by user returns empty when no certification</li>
+<li>✅ Find by user returns certifications</li>
+<li>✅ User has certification returns false when none</li>
+<li>✅ User has certification returns true when exists</li>
+</ul>
+<h3 id="cursusrepository-4-tests">CursusRepository (4 tests)</h3>
+<ul>
+<li>✅ Find all returns six cursus</li>
+<li>✅ Find by slug returns cursus</li>
+<li>✅ Find by slug returns null for unknown slug</li>
+<li>✅ Cursus has lessons</li>
+</ul>
+<h3 id="lessonprogressrepository-4-tests">LessonProgressRepository (4
+tests)</h3>
+<ul>
+<li>✅ Find one by user and lesson returns null when not started</li>
+<li>✅ Find one by user and lesson returns progress when exists</li>
+<li>✅ Count completed for cursus returns zero when none completed</li>
+<li>✅ Count completed for cursus counts correctly</li>
+</ul>
+<h3 id="lessonrepository-4-tests">LessonRepository (4 tests)</h3>
+<ul>
+<li>✅ Find all returns twelve lessons</li>
+<li>✅ Find by slug returns lesson</li>
+<li>✅ Find by slug returns null for unknown slug</li>
+<li>✅ Lesson has content</li>
+</ul>
+<h3 id="purchaserepository-6-tests">PurchaseRepository (6 tests)</h3>
+<ul>
+<li>✅ User has cursus returns true for purchased</li>
+<li>✅ User has cursus returns false for unpurchased</li>
+<li>✅ User has lesson returns true when cursus purchased</li>
+<li>✅ User has lesson returns false when not purchased</li>
+<li>✅ Find by user returns user purchases</li>
+<li>✅ Purchase has correct amount</li>
+</ul>
+<h3 id="themerepository-4-tests">ThemeRepository (4 tests)</h3>
+<ul>
+<li>✅ Find all returns themes</li>
+<li>✅ Find by slug returns theme</li>
+<li>✅ Find by slug returns null for unknown slug</li>
+<li>✅ Theme has cursus</li>
+</ul>
+<h3 id="userrepository-3-tests">UserRepository (3 tests)</h3>
+<ul>
+<li>✅ Find by activation token returns user</li>
+<li>✅ Find by activation token returns null for unknown token</li>
+<li>✅ Find by email returns correct user</li>
+</ul>
+<hr />
+<h2 id="tests-fonctionnels-21-tests">Tests Fonctionnels (21 tests)</h2>
+<p>Tests HTTP de bout en bout via <code>WebTestCase</code> (client HTTP
+intégré Symfony).</p>
+<h3 id="registration-4-tests">Registration (4 tests)</h3>
+<ul>
+<li>✅ Registration page is accessible</li>
+<li>✅ Successful registration</li>
+<li>✅ Registration with existing email fails</li>
+<li>✅ Registration with short password fails</li>
+</ul>
+<h3 id="email-activation-4-tests">Email Activation (4 tests)</h3>
+<ul>
+<li>✅ Valid token activates account</li>
+<li>✅ Invalid token shows error</li>
+<li>✅ Expired token shows error</li>
+<li>✅ Unverified user cannot purchase</li>
+</ul>
+<h3 id="login-7-tests">Login (7 tests)</h3>
+<ul>
+<li>✅ Login page is accessible</li>
+<li>✅ Successful login</li>
+<li>✅ Login with wrong password fails</li>
+<li>✅ Login with unknown email fails</li>
+<li>✅ Admin can access backoffice</li>
+<li>✅ User cannot access admin</li>
+<li>✅ Logout</li>
+</ul>
+<h3 id="purchase-6-tests">Purchase (6 tests)</h3>
+<ul>
+<li>✅ Unauthenticated user is redirected to login</li>
+<li>✅ Unverified user cannot purchase</li>
+<li>✅ Purchase success creates purchase record</li>
+<li>✅ Purchase lesson success creates purchase record</li>
+<li>✅ Access to purchased lesson</li>
+<li>✅ Access to unpurchased lesson is blocked</li>
+</ul>
+<hr />
+<h2 id="résultat">Résultat</h2>
+<pre><code>OK (50 tests, 92 assertions)</code></pre>
+<table>
+<thead>
+<tr>
+<th>Catégorie</th>
+<th>Tests</th>
+<th>Assertions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Repository</td>
+<td>29</td>
+<td>58</td>
+</tr>
+<tr>
+<td>Fonctionnels</td>
+<td>21</td>
+<td>34</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td><strong>50</strong></td>
+<td><strong>92</strong></td>
+</tr>
+</tbody>
+</table>
+</body>
+</html>
