@@ -16,7 +16,27 @@ Users can browse training courses (themes → cursus → lessons), purchase cont
 | Composer | 2.x |
 | MySQL | 8.0 |
 | Symfony CLI | latest |
+| Mailpit | latest |
 | Node / npm | optional (no front-end build step) |
+
+### Install Mailpit (local email catcher)
+
+Mailpit intercepts outgoing emails locally so you can test account activation without a real SMTP server.
+
+**macOS (Homebrew):**
+```bash
+brew install mailpit
+```
+
+**Linux / Windows:**
+Download the latest binary from https://github.com/axllent/mailpit/releases
+
+**Start Mailpit:**
+```bash
+mailpit
+```
+
+Mailpit listens on port **1025** (SMTP) and exposes its inbox at **http://localhost:8025**.
 
 ---
 
